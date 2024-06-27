@@ -36,3 +36,19 @@
     transform: rotate(360deg);
   }
 }
+
+.custom-navbar {
+  background-color: #1a3f2b; /* 원하는 배경색 */
+}
+
+.custom-navbar .navbar-brand,
+.custom-navbar .nav-link {
+  color: white; /* 원하는 글자색 */
+}
+
+.main-bg {
+  height: 300px;
+  background-image: url('./img/bg.png');
+  background-size: cover;
+  background-position: center;
+}
