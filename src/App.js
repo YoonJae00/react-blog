@@ -3,55 +3,45 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Header from './Navbar';
 import bg from './img/bg.png'
 import Content from './Content';
-import {Route, Routes, Link} from 'react-router-dom';
+import {Route, Routes, Link, useNavigate, Outlet} from 'react-router-dom';
 import { useState } from 'react';
 import Detail from './blogdetail';
 import Login from './Login';
+import axios from 'axios';
+import { useEffect } from 'react';
 
-const posts = [
-  {
-    id: 1,
-    title: "First Blog Post",
-    author: "John Doe",
-    date: "2024-06-24",
-    summary: "This is a summary of the first blog post. It gives a brief overview of the content.",
-    img : 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/1200px-React-icon.svg.png'
-  },
-  {
-    id: 2,
-    title: "Second Blog Post",
-    author: "Jane Smith",
-    date: "2024-06-25",
-    summary: "This is a summary of the second blog post. It gives a brief overview of the content."
-  },
-  {
-    id: 2,
-    title: "Second Blog Post",
-    author: "Jane Smith",
-    date: "2024-06-25",
-    summary: "This is a summary of the second blog post. It gives a brief overview of the content."
-  }, {
-    id: 2,
-    title: "Second Blog Post",
-    author: "Jane Smith",
-    date: "2024-06-25",
-    summary: "This is a summary of the second blog post. It gives a brief overview of the content."
-  },
-];
 
 function App() {
 
-  const [blogdata, setblogdata] = useState(posts);
+  const [blogdata, setblogdata] = useState([{}]);
+  const [loginStat, setloginStat] = useState(false);
+
+  useEffect(() => {
+    axios.get('/blog')
+    .then(response => {
+      setblogdata(response.data)
+    })
+    .catch(error => {
+      console.error('err',error)
+    })
+  }, []);
+
+  console.log('dsadsa',blogdata);
 
   return (
     <div className="App">
-         <Header/>
+         <Header loginStat={loginStat} setloginStat={setloginStat}/>
          <div className='main-bg'>
          </div>
          <Routes>
          <Route path='/' element={<Content blogdata={blogdata} setblogdata={setblogdata}/>}/>
          <Route path='/detail/:id' element={<Detail blogdata={blogdata}/>}/>
-         <Route path='/login' element={<Login/>}/>
+         <Route path='/login' element={<Login loginStat={loginStat} setloginStat={setloginStat}/>}/>
+         <Route path='/secret' element={<><h1>Nest, Outlet 연습</h1><Outlet/></>}>
+          <Route path='one' element={<h3>이스터에그 1</h3>}/>
+          <Route path='two' element={<h3>이스터에그 2</h3>}/>
+         </Route>
+         <Route path='*' element={<div>404 Error</div>}/>
          </Routes>
     </div>
   );

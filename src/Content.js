@@ -12,16 +12,16 @@ function Content({blogdata, setblogdata}) {
     <Container className="mt-5">
       <Row>
         {blogdata.map((post) => (
-          <Col key={post.id} md={4} className="mb-4">
+          <Col key={post.blogCode} md={4} className="mb-4">
             <Card>
               <Card.Body>
-                <Card.Img variant="top" src={post.img} style={{ height: '200px', width: '100%', objectFit: 'contain' }}/>
-                <Card.Title>{post.title}</Card.Title>
+                <Card.Img variant="top" src={post.blogImg} style={{ height: '200px', width: '100%', objectFit: 'contain' }}/>
+                <Card.Title>{post.blogTitle}</Card.Title>
                 <Card.Subtitle className="mb-2 text-muted">
-                  By {post.author} on {post.date}
+                  By {post.blogAuthor} on {post.startTime}
                 </Card.Subtitle>
-                <Card.Text>{post.summary}</Card.Text>
-                <Button variant="primary" as={Link} to={`/detail/${post.id}`}>
+                <Card.Text>{post.blogSummary}</Card.Text>
+                <Button variant="primary" as={Link} to={`/detail/${post.blogCode}`}>
                   상세보기
                 </Button>
               </Card.Body>

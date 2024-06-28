@@ -4,23 +4,26 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import './App.css';
+import { useNavigate } from 'react-router-dom';
 
-function Header() {
+function Header({loginStat, setloginStat}) {
+
+    let navigate = useNavigate();
   return (
     <Navbar collapseOnSelect expand="lg" className="custom-navbar">
       <Container>
-        <Navbar.Brand href="/">React-Bootstrap</Navbar.Brand>
+        <Navbar.Brand href="/">React-Blog</Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">
             <Nav.Link href="#features">Features</Nav.Link>
             <Nav.Link href="#pricing">Pricing</Nav.Link>
-            <NavDropdown title="Dropdown" id="collapsible-nav-dropdown">
+            <NavDropdown title="Outlet Remember" id="collapsible-nav-dropdown">
               <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.2">
-                Another action
+              <NavDropdown.Item href="/secret/one">
+                secret
               </NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
+              <NavDropdown.Item href="/secret/two">secret 2</NavDropdown.Item>
               <NavDropdown.Divider />
               <NavDropdown.Item href="#action/3.4">
                 Separated link
@@ -28,12 +31,13 @@ function Header() {
             </NavDropdown>
           </Nav>
           <Nav>
-            <Nav.Link>
+            <Nav.Link onClick={() => navigate('/write')}>
               글작성
             </Nav.Link>
-            <Nav.Link href='/login'>
+            {loginStat === true ? <Nav.Link onClick={() => setloginStat(false)}>로그아웃 하기</Nav.Link> : <Nav.Link href='/login'>
                 로그인하기
-            </Nav.Link>
+            </Nav.Link>}
+            
           </Nav>
         </Navbar.Collapse>
       </Container>
