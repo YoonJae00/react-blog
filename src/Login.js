@@ -1,20 +1,34 @@
-import React, { useState } from 'react';
+import axios from 'axios';
+import React, { useState, useEffect } from 'react';
 import { Card, Container, Row, Col, InputGroup, Form, Button } from 'react-bootstrap';
-
-let loginform = [{
-  id : 'user01' , pw : 'pass01'
-}, {
-  id : 'user02' , pw : 'pass02'
-}]
+import { Link } from 'react-router-dom';
 
 function Login({loginStat, setloginStat}) {
 
     const [inputId, setinputId] = useState("");
     const [inputPw, setinputPw] = useState("");
     const [loginMessage, setLoginMessage] = useState("");
+    const [loginform, setloginform] = useState({});
+
+    // useEffect(() => {
+    //   axios.get('/userform')
+    //   .then(response => setloginform(response.data));
+    //   console.log(loginform);
+    // }, []);
+
+    useEffect(() => {
+      axios.get('/userform')
+        .then(response => {
+          setloginform(response.data);
+          console.log(response.data); // 성공적으로 데이터를 가져온 후 콘솔에 출력
+        })
+        .catch(error => {
+          console.error("There was an error fetching the data!", error);
+        });
+    }, []);
 
     const loginHandler = () => {
-      const user = loginform.find(user => user.id == inputId && user.pw == inputPw);
+      const user = loginform.find(user => user.userId == inputId && user.userPw == inputPw);
       if (user) {
         setLoginMessage("로그인 성공!");
         console.log('success')
@@ -24,6 +38,8 @@ function Login({loginStat, setloginStat}) {
         console.log('실패')
       }
     }
+
+
   return (
     <Container className="d-flex justify-content-center mt-5" style={{ minHeight: '100vh' }}>
       <Row>
@@ -55,7 +71,7 @@ function Login({loginStat, setloginStat}) {
              />
             </InputGroup>
               </Card.Text>
-              <Button variant="info" className='ms-3'>회원가입</Button>
+              <Button variant="info" className='ms-3' as={Link} to={'/regist'}>회원가입</Button>
               <Button variant="success" className='ms-3' onClick={loginHandler}>로그인</Button>
               {loginMessage && <p className="mt-3">{loginMessage}</p>}
             </Card.Body>

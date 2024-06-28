@@ -9,6 +9,7 @@ import Detail from './blogdetail';
 import Login from './Login';
 import axios from 'axios';
 import { useEffect } from 'react';
+import Regist from './Regist';
 
 
 function App() {
@@ -37,6 +38,7 @@ function App() {
          <Route path='/' element={<Content blogdata={blogdata} setblogdata={setblogdata}/>}/>
          <Route path='/detail/:id' element={<Detail blogdata={blogdata}/>}/>
          <Route path='/login' element={<Login loginStat={loginStat} setloginStat={setloginStat}/>}/>
+         <Route path='/regist' element={<Regist/>}/>
          <Route path='/secret' element={<><h1>Nest, Outlet 연습</h1><Outlet/></>}>
           <Route path='one' element={<h3>이스터에그 1</h3>}/>
           <Route path='two' element={<h3>이스터에그 2</h3>}/>
