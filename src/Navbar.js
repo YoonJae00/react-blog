@@ -9,6 +9,12 @@ import { useNavigate } from 'react-router-dom';
 function Header({loginStat, setloginStat}) {
 
     let navigate = useNavigate();
+
+    const logoutHandler = () => {
+      setloginStat(false);
+      localStorage.removeItem('loginStat');
+      localStorage.removeItem('userinfo')
+    }
   return (
     <Navbar collapseOnSelect expand="lg" className="custom-navbar">
       <Container>
@@ -31,13 +37,15 @@ function Header({loginStat, setloginStat}) {
             </NavDropdown>
           </Nav>
           <Nav>
-            <Nav.Link onClick={() => navigate('/write')}>
+            {
+              loginStat === true ?      <Nav.Link onClick={() => navigate('/write')}>
               글작성
-            </Nav.Link>
-            {loginStat === true ? <Nav.Link onClick={() => setloginStat(false)}>로그아웃 하기</Nav.Link> : <Nav.Link href='/login'>
+            </Nav.Link> : <Nav.Link> 로그인해야 글작성 가능</Nav.Link>
+            }
+       
+            {loginStat === true ? <Nav.Link onClick={logoutHandler}>로그아웃 하기</Nav.Link> : <Nav.Link href='/login'>
                 로그인하기
             </Nav.Link>}
-            
           </Nav>
         </Navbar.Collapse>
       </Container>

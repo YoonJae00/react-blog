@@ -40,7 +40,6 @@ public class UserService {
     public List<UserDTO> finduser() {
         List<User> users = userRepository.findAll();
 
-        System.out.println("users = " + users);
 
         return users.stream().map(user -> modelMapper.map(user, UserDTO.class)).collect(Collectors.toList());
     }

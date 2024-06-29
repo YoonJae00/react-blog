@@ -20,7 +20,6 @@ function Login({loginStat, setloginStat}) {
       axios.get('/userform')
         .then(response => {
           setloginform(response.data);
-          console.log(response.data); // 성공적으로 데이터를 가져온 후 콘솔에 출력
         })
         .catch(error => {
           console.error("There was an error fetching the data!", error);
@@ -33,6 +32,8 @@ function Login({loginStat, setloginStat}) {
         setLoginMessage("로그인 성공!");
         console.log('success')
         setloginStat(true);
+        localStorage.setItem('loginStat','true');
+        localStorage.setItem('userinfo',JSON.stringify(user))
       } else {
         setLoginMessage("아이디 또는 비밀번호가 일치하지 않습니다.");
         console.log('실패')

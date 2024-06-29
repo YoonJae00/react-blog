@@ -6,6 +6,7 @@ import com.ohgiraffers.reactblog.entity.Blog;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -23,5 +24,20 @@ public class BlogService {
         return blogs.stream()
                 .map(blog -> modelMapper.map(blog, BlogDTO.class))
                 .collect(Collectors.toList());
+    }
+
+    public BlogDTO getblog(int userNo) {
+        Blog getblog = blogRepository.findById(Integer.valueOf(userNo)).orElseThrow();
+
+        BlogDTO blogDTO = modelMapper.map(getblog, BlogDTO.class);
+
+        return blogDTO;
+    }
+
+    @Transactional
+    public void registBlog(BlogDTO blogDTO) {
+        Blog blog = modelMapper.map(blogDTO, Blog.class);
+
+        blogRepository.save(blog);
     }
 }
