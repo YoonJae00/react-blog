@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom";
 import { Container, Card, Toast} from 'react-bootstrap';
 import styled from "styled-components";
 import { useEffect, useState } from "react";
+import axios from "axios";
 
 
 let YellowBtn = styled.button`
@@ -15,11 +16,13 @@ let YellowBox = styled.div`
     display : ${props => props.isDone}
 `
 
-function Detail({blogdata}) {
+function Detail() {
 
     const [isblock, setisblock] = useState('block');
 
     const [toastStat, settoastStat] = useState(false);
+
+    const [post, setpost] = useState({});
 
     useEffect(() => {
         let timer = setTimeout( () => {
@@ -34,7 +37,15 @@ function Detail({blogdata}) {
     },[]);
 
     const {id} = useParams();
-    const post = blogdata.find(p => p.blogCode === parseInt(id));
+
+    useEffect(() => {
+      axios.get(`/blog/${id}`)
+        .then((response => {
+          const data = response.data;
+          setpost(data);
+          console.log('data',data);
+        }))
+    }, []);
 
     const startTimeString = post.startTime;
     const dateObj = new Date(startTimeString);
@@ -50,6 +61,8 @@ function Detail({blogdata}) {
     useEffect(() => {
       post.newTime = formattedStartTime
     }, []);
+
+   
 
     console.log(post);
 

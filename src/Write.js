@@ -68,15 +68,15 @@ function Write() {
                 <Row className="mb-3">
                     <Col md={{ span: 6, offset: 6 }}>
                         <InputGroup>
-                            <InputGroup.Text id="basic-addon1">이미지 URL</InputGroup.Text>
+                            <InputGroup.Text id="basic-addon1">요약정보</InputGroup.Text>
                             <Form.Control
-                                placeholder="URL"
-                                value={blogWrite.blogImg}
+                                placeholder="요약정보를 작성해주세요"
+                                value={blogWrite.blogSummary}
                                 onChange={onChangeHandler}
-                                name="blogImg"
+                                name="blogSummary"
                             />
                              <Button variant="primary" onClick={handleShow}>
-                                요약정보 작성
+                                이미지 삽입
                             </Button>
                         </InputGroup>
                     </Col>
@@ -110,19 +110,20 @@ function Write() {
 
         <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-        <Modal.Title>요약정보 작성</Modal.Title>
+        <Modal.Title>이미지 삽입</Modal.Title>
         </Modal.Header>
         <Modal.Body>
                 <Form.Group controlId="formBlogTitle" className="mb-3">
-                    <Form.Label>요약정보</Form.Label>
+                    <Form.Label>이미지</Form.Label>
                     <Form.Control
                         type="text"
-                        placeholder="요약정보를 입력하세요"
-                        value={blogWrite.blogSummary}
-                        name="blogSummary"
+                        placeholder="이미지 URL을 입력하세요"
+                        value={blogWrite.blogImg}
+                        name="blogImg"
                         onChange={onChangeHandler}
                     />
                 </Form.Group>
+                <img src={blogWrite.blogImg} class="rounded mx-auto d-block" alt="blogImg"></img>
         </Modal.Body>
         <Modal.Footer>
         <Button variant="secondary" onClick={handleClose}>

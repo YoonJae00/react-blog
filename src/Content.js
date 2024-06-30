@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Row, Col, Card, Button, Pagination } from 'react-bootstrap';
+import { Container, Row, Col, Card, Button, Pagination, Dropdown, DropdownButton } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
@@ -8,6 +8,7 @@ function Content() {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const postsPerPage = 6;
+  const [sortOption, setSortOption] = useState('latest');
 
   
 
@@ -23,7 +24,7 @@ function Content() {
         setBlogData(response.data.content);
         setTotalPages(response.data.totalPages);
       } catch (error) {
-        console.error("Failed to fetch blogs", error);
+        console.error(error);
       }
     };
 
@@ -31,9 +32,19 @@ function Content() {
   }, [currentPage]);
 
   const handlePageChange = (pageNumber) => setCurrentPage(pageNumber);
-
+  const handleSortChange = (sortOption) => setSortOption(sortOption);
+  console.log('sortoption',sortOption);
   return (
     <Container className="mt-5">
+       <Row className="mb-4">
+        <Col className="d-flex justify-content-end">
+          <DropdownButton id="dropdown-basic-button" title="정렬하기" onSelect={handleSortChange}>
+            <Dropdown.Item eventKey="latest">최신순으로</Dropdown.Item>
+            <Dropdown.Item eventKey="oldest">오래된순으로</Dropdown.Item>
+            <Dropdown.Item eventKey="name">이름순으로</Dropdown.Item>
+          </DropdownButton>
+        </Col>
+      </Row>
       <Row>
         {blogdata.map((post) => (
           <Col key={post.blogCode} md={4} className="mb-4">

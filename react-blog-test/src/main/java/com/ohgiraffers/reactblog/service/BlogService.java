@@ -5,6 +5,8 @@ import com.ohgiraffers.reactblog.dto.BlogDTO;
 import com.ohgiraffers.reactblog.entity.Blog;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -39,5 +41,11 @@ public class BlogService {
         Blog blog = modelMapper.map(blogDTO, Blog.class);
 
         blogRepository.save(blog);
+    }
+
+    public Page<BlogDTO> findpaging(Pageable pageable) {
+        Page<Blog> blogPage = blogRepository.findAll(pageable);
+        Page<BlogDTO> blogDTOPage = blogPage.map(blog -> modelMapper.map(blog, BlogDTO.class));
+        return blogDTOPage;
     }
 }
